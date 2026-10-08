@@ -56,13 +56,73 @@ dialog{background:var(--pn);color:var(--tx);border:1px solid var(--ln);border-ra
 #tb{display:none}
 @media(max-width:860px){#app{grid-template:"t" auto "c" 1fr/1fr;height:100dvh}#lp,#vt,#ex{display:none}
 #top{flex-wrap:wrap;padding:6px 10px 8px}#top b{margin-right:auto}#top button,#top summary{padding:7px 10px}#qm{order:1}#ins{order:2}#th{order:3}#q{order:4;flex:1 1 150px;min-width:150px;width:auto}#dl{order:5}.pop{position:fixed;left:8px;right:8px;top:auto;width:auto}
-#c{margin-bottom:calc(52px + env(safe-area-inset-bottom,0px))}#cc{padding:10px}.dy{min-height:46px}.ev{font-size:0;height:5px;padding:0;margin-top:1px}.cd{flex-basis:150px;height:96px}
+#c{margin-bottom:calc(52px + env(safe-area-inset-bottom,0px))}#cc{padding:10px}.dy{min-height:46px}.ev{font-size:0;height:5px;padding:0;margin-top:1px;pointer-events:none}.cd{flex-basis:150px;height:96px}
 #rp{position:fixed;left:0;right:0;bottom:calc(52px + env(safe-area-inset-bottom,0px));height:68vh;z-index:30;border:0;border-top:1px solid var(--ln);box-shadow:0 -10px 28px rgba(0,0,0,.35);border-radius:12px 12px 0 0;transform:translateY(110%);transition:transform .22s}
-#app[data-s=r] #rp{transform:none}.sh{display:flex;justify-content:space-between;margin:-4px 0 6px}
+#app[data-pane=r] #rp{transform:none}.sh{display:flex;justify-content:space-between;margin:-4px 0 6px}
 #tb{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:50;height:calc(52px + env(safe-area-inset-bottom,0px));padding-bottom:env(safe-area-inset-bottom,0px);background:var(--pn);border-top:1px solid var(--ln)}
 #tb button{flex:1;border:0;border-radius:0;font-size:11px;line-height:1.2}#tb button.on{background:transparent;color:var(--ac);font-weight:700;box-shadow:inset 0 2px 0 var(--ac)}input,select,textarea{font-size:16px!important}}
+
+/* ===== glass layer ===== */
+:root{--g:rgba(255,251,244,.60);--g2:rgba(255,251,244,.36);--gb:rgba(255,255,255,.65);--sh:0 10px 34px rgba(90,52,28,.16);--r:20px;--ac2:#a8643f}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--g:rgba(44,39,33,.58);--g2:rgba(44,39,33,.34);--gb:rgba(255,255,255,.11);--sh:0 10px 34px rgba(0,0,0,.45)}}
+:root[data-theme=dark]{--g:rgba(44,39,33,.58);--g2:rgba(44,39,33,.34);--gb:rgba(255,255,255,.11);--sh:0 10px 34px rgba(0,0,0,.45)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){:root{--g:var(--pn);--g2:var(--pn)}}
+[hidden]{display:none!important}
+body{font-size:13px;background:radial-gradient(60% 50% at 8% 0%,#e8c3a1aa,transparent 70%),radial-gradient(50% 45% at 100% 18%,#b7c796aa,transparent 70%),radial-gradient(70% 60% at 45% 115%,#c9876877,transparent 70%),var(--bg);background-attachment:fixed}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) body{background:radial-gradient(60% 50% at 8% 0%,#7a4a3266,transparent 70%),radial-gradient(50% 45% at 100% 18%,#4f6b3a55,transparent 70%),radial-gradient(70% 60% at 45% 115%,#8a3b4a44,transparent 70%),var(--bg);background-attachment:fixed}}
+:root[data-theme=dark] body{background:radial-gradient(60% 50% at 8% 0%,#7a4a3266,transparent 70%),radial-gradient(50% 45% at 100% 18%,#4f6b3a55,transparent 70%),radial-gradient(70% 60% at 45% 115%,#8a3b4a44,transparent 70%),var(--bg);background-attachment:fixed}
+#app{padding:10px;gap:10px;grid-template:"t t t" auto "l c r" minmax(0,1fr)/220px minmax(0,1fr) 310px}
+#top,#lp,#rp,#c{background:var(--g);-webkit-backdrop-filter:blur(22px) saturate(165%);backdrop-filter:blur(22px) saturate(165%);border:1px solid var(--gb);border-radius:var(--r);box-shadow:var(--sh)}
+#top{padding:8px 12px;gap:8px 10px}#top b::before{content:"";display:inline-block;width:9px;height:9px;margin-right:7px;border-radius:50%;background:linear-gradient(135deg,#d99a62,var(--ac))}
+#c{background:var(--g2);overflow:hidden}#sb{background:transparent;border-bottom:1px solid var(--gb);padding:9px 14px}#cc{padding:16px}
+aside{padding:14px}
+button{border-radius:999px;background:var(--g2);border:1px solid var(--gb);padding:5px 12px;transition:transform .15s,background .15s,box-shadow .15s}
+button:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(90,52,28,.18)}
+button.on,.ch.on{background:linear-gradient(135deg,var(--ac2),var(--ac));border-color:transparent;color:#fff;box-shadow:0 4px 14px rgba(122,74,50,.35)}
+#vt{background:var(--g2);border:1px solid var(--gb);border-radius:999px;padding:3px;gap:2px}#vt button{border:0;background:transparent;box-shadow:none}#vt button.on{box-shadow:0 3px 10px rgba(122,74,50,.35)}
+input:not([type=checkbox]),textarea,select{background:var(--g2);border:1px solid var(--gb);border-radius:12px;padding:6px 10px}#q{border-radius:999px;width:190px}
+input:focus,textarea:focus{outline:2px solid var(--ac2);outline-offset:1px}
+#dl,details.qm summary{border-radius:999px;background:var(--g2);border:1px solid var(--gb)}details.qm summary{padding:5px 12px}
+.pop{background:var(--g);-webkit-backdrop-filter:blur(24px) saturate(170%);backdrop-filter:blur(24px) saturate(170%);border:1px solid var(--gb);border-radius:16px;padding:8px}.pop a{border-radius:10px}
+.mo{border-radius:12px;padding:7px 10px}.mo:hover{background:var(--g2)}.mo.on{background:linear-gradient(135deg,var(--ac2),var(--ac))}
+.cd{border-radius:18px;box-shadow:0 8px 20px rgba(60,30,10,.22);border:1px solid rgba(255,255,255,.28)}.cd::after{content:"";position:absolute;inset:0;background:linear-gradient(160deg,rgba(255,255,255,.22),transparent 45%);pointer-events:none}
+.bd{background:rgba(0,0,0,.35);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.dy{background:var(--g2);border:1px solid var(--gb);border-radius:12px}.dy.ds{background:var(--g)}.dy.td{box-shadow:0 0 0 2px #c47a1a inset}.ev{border-radius:6px}
+.ag{border-radius:12px;border-bottom:0;margin-bottom:4px}.ag.sel,.ag:hover{background:var(--g)}
+.box,.fq{background:var(--g);border:1px solid var(--gb);border-radius:16px;box-shadow:0 4px 18px rgba(90,52,28,.08)}
+.fq summary{list-style:none;display:flex;justify-content:space-between;gap:10px;padding:11px 14px}.fq summary::-webkit-details-marker{display:none}.fq summary::after{content:"+";color:var(--ac);font-weight:700}.fq[open] summary::after{content:"–"}.fq>div{padding:0 14px 12px;line-height:1.55}
+.rt{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:14px}.rt a{display:block;padding:11px 13px;border-radius:16px;background:var(--g);border:1px solid var(--gb);color:var(--tx);text-decoration:none;box-shadow:0 4px 14px rgba(90,52,28,.08);transition:transform .15s}.rt a:hover{transform:translateY(-2px)}.rt small{color:var(--mu)}
+.go{border-radius:999px;background:linear-gradient(135deg,var(--ac2),var(--ac));padding:7px 16px}
+dialog{border-radius:22px;background:var(--g);-webkit-backdrop-filter:blur(26px);backdrop-filter:blur(26px);border:1px solid var(--gb);box-shadow:var(--sh)}dialog::backdrop{background:rgba(40,25,12,.35);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+iframe{border-radius:14px}
+@media(max-width:860px){#app{padding:8px;gap:8px;grid-template:"t" auto "c" minmax(0,1fr)/minmax(0,1fr)}
+details.qm{position:static}.pop{position:absolute;left:0;right:0;top:calc(100% + 6px);width:auto}
+#c{margin-bottom:calc(68px + env(safe-area-inset-bottom,0px))}
+#tb{left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));height:56px;padding:0 4px;border-radius:22px;background:var(--g);-webkit-backdrop-filter:blur(22px) saturate(170%);backdrop-filter:blur(22px) saturate(170%);border:1px solid var(--gb);box-shadow:var(--sh)}
+#tb button{background:transparent;border:0;box-shadow:none;border-radius:16px}#tb button.on{background:transparent;color:var(--ac);box-shadow:none}
+#rp{left:8px;right:8px;bottom:calc(76px + env(safe-area-inset-bottom,0px));height:66vh;border-radius:24px}#rp::before{content:"";display:block;width:38px;height:4px;border-radius:2px;background:var(--ln);margin:-6px auto 8px}}
+
+/* ===== frosted overlays ===== */
+:root{--gf:rgba(250,246,238,.90);--gf2:rgba(255,255,255,.75)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--gf:rgba(34,30,26,.90);--gf2:rgba(255,255,255,.14)}}
+:root[data-theme=dark]{--gf:rgba(34,30,26,.90);--gf2:rgba(255,255,255,.14)}
+.pop,dialog,#tb,#rp{background:linear-gradient(180deg,var(--gf2),transparent 40%),var(--gf)}
+.pop{-webkit-backdrop-filter:blur(40px) saturate(190%);backdrop-filter:blur(40px) saturate(190%);box-shadow:0 18px 50px rgba(50,28,12,.32),inset 0 1px 0 var(--gf2);padding:8px}
+.pop a:hover{background:var(--g2)}.pop a.hl{background:linear-gradient(135deg,var(--ac2),var(--ac))}
+dialog{-webkit-backdrop-filter:blur(40px) saturate(190%);backdrop-filter:blur(40px) saturate(190%)}
+dialog::backdrop{background:rgba(40,25,12,.3);-webkit-backdrop-filter:blur(14px) saturate(130%);backdrop-filter:blur(14px) saturate(130%)}
+#tb{-webkit-backdrop-filter:blur(36px) saturate(190%);backdrop-filter:blur(36px) saturate(190%)}
+@media(min-width:861px){#rp{background:var(--g)}}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.pop,dialog,#tb,#rp{background:var(--pn)}}
+
+/* backdrop-filter on #top made it a backdrop root, so the dropdown could not blur the page behind it; move the blur to a pseudo-element */
+#top{-webkit-backdrop-filter:none;backdrop-filter:none}
+#top::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;-webkit-backdrop-filter:blur(22px) saturate(165%);backdrop-filter:blur(22px) saturate(165%)}
+.pop{background:linear-gradient(180deg,var(--gf2),transparent 45%),rgba(250,246,238,.74)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .pop{background:linear-gradient(180deg,var(--gf2),transparent 45%),rgba(34,30,26,.74)}}
+:root[data-theme=dark] .pop{background:linear-gradient(180deg,var(--gf2),transparent 45%),rgba(34,30,26,.74)}
 </style></head><body>
-<div id="app" data-s="">
+<div id="app" data-pane="">
 <header id="top"><b>M&amp;S Hub</b><span id="vt"></span><input id="q" type="search" placeholder="Search ( / )"><span id="dl"></span>
 <details class="qm" id="qm"><summary>Quick links ▾</summary><div class="pop" id="qp"></div></details>
 <button id="ins" hidden>Install</button><button id="th" title="Theme">◐</button><button id="ex">Export</button></header>
@@ -106,24 +166,28 @@ const E=[
 ["2026-12-03","a","MS Review submission + Handholding",""],["2026-12-04","m","Pitch Sessions",""],
 ["2026-12-05","m","50 Finalists announced",""],["2026-12-06","m","Reviews",""],["2026-12-07","m","Closing Ceremony + 20 winners announced",""]];
 const V=["https://player.vimeo.com/video/1233093281?quality=360p","https://player.vimeo.com/video/1233098715?quality=360p","https://player.vimeo.com/video/1233110379?quality=360p","https://player.vimeo.com/video/1233088058?quality=360p"];
-const MODS=[["Start Here","#7a3f6e"],["AI for Business Marketing","#7a4a32"],["CEO Mindset","#b5651d"],["Marketing Engine","#8a3b4a"],["Scale & Structure","#4f6b3a"]];
+const MODS=[["Start Here","#7a3f6e"],["AI for Business Marketing","#7a4a32"],["CEO Mindset","#b5651d"],["Marketing Engine","#8a3b4a"],["Scale & Structure","#4f6b3a"],["30 Days Sales Challenge","#3f6f7a"]];
 // [module, title, duration, releaseDate]
 const L0=[
-[0,"Join the Telegram groups (compulsory)","","2026-10-05"],[0,"Welcome video by Naija Brand Chick","06:53","2026-10-05"],[0,"Download: Cohort 3 Schedule Map","","2026-10-05"],[0,"Replay: Induction event (5 Oct)","","2026-10-05"],[0,"Test: What is your Personality?","","2026-10-06"],[0,"Test: What is your Temperament?","","2026-10-06"],[0,"MSS 3 Baseline Assessment","","2026-10-05"],
+[0,"Join the Telegram groups (compulsory)","","2026-10-05"],[0,"Welcome video by Naija Brand Chick","06:53","2026-10-05"],[0,"Download: Cohort 3 Schedule Map","","2026-10-05"],[0,"Replay: Induction event (5 Oct)","","2026-10-05"],[0,"Test: What is your Personality?","","2026-10-06","https://www.16personalities.com/free-personality-test"],[0,"Test: What is your Temperament?","","2026-10-06","https://www.temperamentquiz.com/register"],[0,"MSS 3 Baseline Assessment","","2026-10-05"],
 [1,"Why AI for Business Marketing","07:35","2026-10-06"],[1,"Create a highly engaging storyline for your ads","07:31","2026-10-06"],[1,"Great prompts, even as a novice","04:35","2026-10-06"],[1,"Character & non-character references","08:45","2026-10-06"],[1,"Apps I use to create videos","06:51","2026-10-06"],[1,"How I get ideas for clone videos","01:30","2026-10-06"],[1,"How I clone myself (Part 1)","09:54","2026-10-06"],[1,"How I clone myself (Part 2)","11:56","2026-10-06"],[1,"What to tell AI so videos engage & convert","09:26","2026-10-06"],[1,"Get your prompt ready for an AI cinematic platform","06:02","2026-10-06"],[1,"AI cinematic video tools & their costs","03:57","2026-10-06"],[1,"How to fix bad AI generations","03:18","2026-10-06"],[1,"Use AI to build a personal brand","04:15","2026-10-06"],[1,"Make money creating AI videos for others","07:32","2026-10-06"],[1,"MOU template for clients to sign","","2026-10-06"],[1,"AI music for your business (Part 1)","01:39","2026-10-06"],[1,"AI music for your business (Part 2)","05:12","2026-10-06"],[1,"Creating a marketing video live","12:24","2026-10-06"],[1,"How I edit my videos","10:39","2026-10-06"],[1,"How to download your videos","01:51","2026-10-06"],[1,"ASSIGNMENT: AI for Business Marketing (win ₦200k / $100)","","2026-10-06"],
 [2,"How you'll know you're a CEO with a marketing mindset","12:48","2026-10-12"],[2,"Download: MS CEO mindset checklist","","2026-10-12"],[2,"ASSIGNMENT: CEO with the marketing mindset","","2026-10-12"],[2,"QUIZ: The Marketing-Minded CEO Mastery","10:00","2026-10-12"],[2,"Marketing & Structure Performance Review","","2026-12-02"]];
-let L=L0.map((x,i)=>({id:"l"+i,m:x[0],t:x[1],d:x[2],r:x[3]}));
+let L=L0.map((x,i)=>({id:"l"+i,m:x[0],t:x[1],d:x[2],r:x[3],u:x[4]||""}));
 E.forEach((e,i)=>{if(e[1]=="l"&&e[0]>"2026-10-12"&&!/unlocked/.test(e[2]))L.push({id:"g"+i,m:e[0]<"2026-11-10"?3:4,t:e[2],d:"",r:e[0],pl:1})});
 E.forEach((e,i)=>e.id="e"+i);
-const LK=[["Learning portal","https://naijabrandchick.com/learn/dashboard/enrolled-courses/"],["Password reset guide","https://naijabrandchick.com/learn/password-reset-guide"],["Find your student ID","https://naijabrandchick.com/learn/student-id-guide"],["Baseline form (compulsory)","https://form.jotform.com/262733452901556"],["AI assignment form","https://forms.gle/jUPdhokqLA4PmDCx9"],["Telegram: Main","https://t.me/+rzcGaQAJ9lg2YTA0"],["Telegram: Discussion","https://t.me/+7Vc9iIJ-xvMyNzU0"],["Telegram: Assignments only","https://t.me/+81h32t5DkWUwYWZk"],["Telegram: Tech issues","https://t.me/+eCFWRlCkuwplZTY0"],["Handholding: Community Managers (12–1pm daily)","https://us06web.zoom.us/j/81691446439?pwd=Sn7YtI6yBrYK7vmGmZGMJdBrSSeES9.1"],["Handholding: Naijabrandchick (Sat 9–10pm)","https://us06web.zoom.us/j/88112983774?pwd=Tb60dUa7i6Drs0CHEuLoG73rlrVIei.1"],["Induction replay","https://us06web.zoom.us/rec/share/tJyH5JDaVY4Uuh05JYwTgihE8tiV4Cqdyah69u22zugxZEjoV17Xu6TXCmidv3U8.1zMm9meRfE2V7ETo"],["Induction live (YouTube)","https://www.youtube.com/watch?v=Uj29NIkK3MI"]];
+const SB="https://naijabrandchick.com/learn/e-courses/30-days-sales-challenge-for-mss3/lesson/";
+[["IMPORTANT: Join the MS School Telegram groups","","important-join-the-ms-school-telegram-groups-for-cohort-3"],["Preparing for the 30 days sales challenge","05:31","preparing-for-the-30-days-sales-challenge-3-2"],
+...[["Be Findable on Social Platforms","11:51","be-findable-on-social-platforms"],["Be Findable on Google Maps","10:03","be-findable-on-google-maps"],["Phone Contact Day","04:33","phone-contact-day"],["WhatsApp Leveraging Day","12:02","whatsapp-leveraging-day"],["Happy Customer Day","05:36","happy-customer-day"],["Audience Expansion Day","04:31","audience-expansion-day"],["Pick and Expand Day 1","03:59","pick-and-expand-day-1"],["The Objection Day","04:39","the-objection-day"],["Encouragement Day","05:06","encouragement-day"],["Introduce Yourself Day","03:42","introduce-yourself-day"],["Pick and Expand Day 2","02:12","pick-and-expand-day-2"],["The Super Info Day","04:46","the-super-info-day"],["The Questionnaire Day","03:04","the-questionnaire-day"],["Screenshot Day","02:30","screenshot-day"],["Proof of Power Day","02:40","proof-of-power-day"],["Pick and Expand Day 3","01:24","pick-and-expand-day-3"],["Sell in Bulk Day","03:27","sell-in-bulk-day"],["Video Mimicking Content Day","04:12","video-mimicking-content-day"],["My Sad Story Day","04:11","my-sad-story-day"],["WhatsApp Status Day","03:50","whatsapp-status-day"],["Bundle Offer Day","02:53","bundle-offer-day"],["Boost Post Day","02:35","boost-post-day"],["The Remora Strategy","03:11","the-remora-strategy"],["The FAQ Day","02:00","the-faq-day"],["Follow up on Dropped Conversation Day","03:10","follow-up-on-dropped-conversation-day"],["Everything You Should Know About This Product","02:47","everything-you-should-know-about-this-product"],["Education Day to Showcase Your Experience","03:17","education-day-to-showcase-your-experience"],["How to Work With Me","02:05","how-to-work-with-me"],["3 Reasons Why They Should Buy","02:21","3-reasons-why-they-should-buy"],["Switching Back to Sustainability Day","03:55","switching-back-to-sustainability-day"]].map((x,i)=>["Day "+(i+1)+": "+x[0],x[1],"day-"+(i+1)+"-"+x[2]+"-3-2"])
+].forEach((x,i)=>L.push({id:"l"+(100+i),m:5,t:x[0],d:x[1],r:"2026-09-02",u:SB+x[2]+"/"}));
+const LK=[["Learning portal","https://naijabrandchick.com/learn/dashboard/enrolled-courses/"],["Password reset guide","https://naijabrandchick.com/learn/password-reset-guide"],["Find your student ID","https://naijabrandchick.com/learn/student-id-guide"],["Personality test (16Personalities)","https://www.16personalities.com/free-personality-test"],["Temperament test","https://www.temperamentquiz.com/register"],["Baseline form (compulsory)","https://form.jotform.com/262733452901556"],["AI assignment form","https://forms.gle/jUPdhokqLA4PmDCx9"],["Telegram: Main","https://t.me/+rzcGaQAJ9lg2YTA0"],["Telegram: Discussion","https://t.me/+7Vc9iIJ-xvMyNzU0"],["Telegram: Assignments only","https://t.me/+81h32t5DkWUwYWZk"],["Telegram: Tech issues","https://t.me/+eCFWRlCkuwplZTY0"],["Handholding: Community Managers (12–1pm daily)","https://us06web.zoom.us/j/81691446439?pwd=Sn7YtI6yBrYK7vmGmZGMJdBrSSeES9.1"],["Handholding: Naijabrandchick (Sat 9–10pm)","https://us06web.zoom.us/j/88112983774?pwd=Tb60dUa7i6Drs0CHEuLoG73rlrVIei.1"],["Induction replay","https://us06web.zoom.us/rec/share/tJyH5JDaVY4Uuh05JYwTgihE8tiV4Cqdyah69u22zugxZEjoV17Xu6TXCmidv3U8.1zMm9meRfE2V7ETo"],["Induction live (YouTube)","https://www.youtube.com/watch?v=Uj29NIkK3MI"]];
 const lk=n=>LK.find(x=>x[0].startsWith(n))[1],Z_CM=lk("Handholding: Comm"),Z_NBC=lk("Handholding: Naija");
 const AS=["S: customer problem, desire or objection identified","P: one clear benefit picked","A: creative angle (story, humour, drama, demo)","R: my product has a clear role in the story","K: next step is clear (how to buy / enquire / book)","Original idea: not a copy or recreation of any Nelly advert","Business promoted from the first second, with benefit + call to action","Last 15 secs, to camera: “See how I made this video? I learnt it from Marketing & Structure School. Nelly taught me.”","Whole video is 60 seconds or less (including those 15 secs)","Posted as an Instagram Reel on my public account (stays public until winner announced)","Tagged @naijabrandchick in Reel + caption, and #MSSchoolAIChallenge","Caption says I'm an M&S School student doing Nelly's assignment and explains how I used S-P-A-R-K","Reel link submitted via the Google Form with my student ID (no spaces) by 9 Oct, 11:59pm WAT"];
-const FC=["Access & portal","Telegram","Live & handholding","Assignment","Higgsfield"];
+const FC=["Access & portal","Telegram","Live & handholding","Assignment","Higgsfield","Tests & community"];
 const HF="https://higgsfield.ai?fpr=nelly-ce8c64",TD="https://t.me/+3Lpdt3sDjG9lZDFk";
 const F=[
 [0,"How do I get into my portal?",`Your enrollment email has the portal link, username and student ID. Portal: <a href="${lk("Learning portal")}" target=_blank>naijabrandchick.com/learn</a>. Log in with your username or email; use Forgot password if needed. After paying, the portal is where all the videos live.`],
-[0,"I haven't received my enrollment email",`Check spam and promotions. If it's not there, post in the <a href="${TD}" target=_blank>Tech Issues group</a> with the email you registered with. Admins in Main and Discussion redirect these to the Tech group, and the tech team replies there. Be patient, replies can be slow.`],
-[0,"Password reset isn't working or keeps looping","Use Forgot password, check spam, try again once, then report it in the Tech Issues group with your registered email (a screenshot helps). Don't repeat the same message in every group."],
+[0,"I haven't received my enrollment email",`Check spam and promotions (students who paid through Selar get it after payment). If it's not there, post in the <a href="${TD}" target=_blank>Tech Issues group</a> with the email you registered with. Admins in Main and Discussion redirect these to the Tech group, and the tech team replies there. Be patient, replies can be slow.`],
+[0,"Password reset isn't working or keeps looping","Use Forgot password, check spam, try once more (a reset email that never arrives, or a login that bounces you back to the password page, is a tech fault), then report it in the Tech Issues group with your registered email (a screenshot helps). Don't repeat the same message in every group."],
 [0,"My dashboard is empty / no courses found",`You should see two courses under <a href="${lk("Learning portal")}" target=_blank>My Courses</a>: Marketing & Structure School and the bonus 30 Days Sales Challenge. If you see none, report it in the Tech group with your email. Batch 3 M&S lessons activate from 5 Oct and later ones unlock on schedule.`],
 [0,"Which course do I start with?","Both are open. Admin guidance: open My Courses, start the 30 Days Challenge and the M&S School. The AI class, personality and temperament tests and the baseline assessment are inside M&S School. Click “Mark as complete” (top right) on each lesson so your percentage rises."],
 [0,"Why are some lessons locked?","Some lessons open only on their scheduled day. Check the Calendar tab or the schedule PDF."],
@@ -145,7 +209,21 @@ const F=[
 [3,"I don't know how to use AI yet","Take the AI for Business Marketing lessons first: storyline, prompts for novices, character references, cloning, fixing bad generations. Then use the Saturday AI handholding (10 Oct) and the live AI session (11 Oct)."],
 [4,"Where is the Higgsfield discount link?",`<a href="${HF}" target=_blank>${HF}</a> (Nelly's referral link, shared in the AI lessons).`],
 [4,"The discount isn't showing",`Members who got it created their account through the link. Some with an existing account didn't see it, and one reply suggested trying a different email. That's unconfirmed, so ask in handholding.`],
-[4,"What does it cost?","Members' reports, not official figures: about $29 (≈₦50k) for credits that ran out quickly; some saw a one-year plan instead of one month; a Visa or Mastercard is needed. Treat it as part of your marketing budget and check Higgsfield's current pricing. The lesson “AI cinematic video tools I use and their costs” covers it."]];
+[4,"What does it cost?","Members' reports, not official figures: about $29 (≈₦50k) for credits that ran out quickly; some saw a one-year plan instead of one month; a Visa or Mastercard is needed. Treat it as part of your marketing budget and check Higgsfield's current pricing. The lesson “AI cinematic video tools I use and their costs” covers it."],
+[0,"What is the 30 Days Sales Challenge?",`A bonus course you were enrolled into with the school: 32 short lessons (the Telegram announcement, a preparation video, then Day 1 to Day 30, mostly 2–12 minutes each). It opened before school started on 5 Oct. Take it personally and treat its assignments as learning exercises. Everything is in Browse → 30 Days Sales Challenge.`],
+[0,"Is there a WhatsApp group for the Sales Challenge?",`No. A WhatsApp group mentioned inside those lessons was for the course's original participants. For this cohort, use the four Telegram groups only.`],
+[0,"Where is the schedule / roadmap?",`The schedule map (roadmap) PDF is pinned at the top of the Main group and the link is in your enrollment email. It works as the school calendar: lesson unlock days, live sessions and handholding. The Calendar tab here mirrors it. Page 4 holds the baseline form link.`],
+[0,"I signed up earlier but my dashboard is now empty",`Report it in the <a href="${TD}" target=_blank>Tech Issues group</a> with your registered email. Share the email there only, not in the public chats. Several members report the same thing, so one clear message is enough.`],
+[1,"Why is nobody answering me in the groups?",`Admins don't teach or answer questions in Telegram, and they redirect problems. Login and portal faults go to Tech Issues (one message, with your registered email), assignment items to Assignments, questions on lessons to handholding. Posting the same message in every group slows things down.`],
+[1,"What happens if I post in the wrong group?",`An admin will usually point you to the right one. Tech Issues is strictly for tech support, with no assignments or other topics.`],
+[2,"Is today's lesson live or on the portal?",`Daily lessons are pre-recorded on the portal and open on the day shown in Calendar. Live sessions are separate (weekends, on YouTube). If a lesson should be open but isn't, refresh, then report it in Tech Issues.`],
+[2,"Do handholding sessions answer my questions?",`Yes. Attendees report quick answers to questions asked there. Community Managers run 12–1pm daily and Naijabrandchick runs Saturdays 9–10pm. Keep questions to what has already been taught, and note sessions end on time.`],
+[3,"What goes in “submit channel” on the schedule PDF?",`The social page where you posted: submit the link to your Reel. A member's answer was “your socials; if it's TikTok, submit the reel link”. The brief asks for an Instagram Reel, and an admin confirmed Instagram is fine.`],
+[3,"I can't find the school's tag on TikTok",`Post as an Instagram Reel, which is accepted. Tag @naijabrandchick and use #MSSchoolAIChallenge. Members write the school tag as joinmsschool or joinmschool in chat, so check the pinned post for the exact spelling.`],
+[3,"Where do new tasks and assignments come from?",`Assignments are posted and pinned in the Assignments group, and new lessons open on schedule in the portal. Check each post: not every task is compulsory.`],
+[5,"Where are the personality and temperament tests?",`Inside the M&S School course on the portal, alongside the baseline assessment. You don't need to submit either test, but you can share your results in the Discussion group. Mark each lesson as completed when done. <a href="https://www.16personalities.com/free-personality-test" target=_blank>Personality test ↗</a> · <a href="https://www.temperamentquiz.com/register" target=_blank>Temperament test ↗</a>`],
+[5,"How do I find other students or an accountability partner?",`Post your area (for example Lagos mainland or Abuja) in the Discussion group. Members have connected this way. Keep personal emails and phone numbers out of the public chats.`],
+[5,"Should I post my progress on social media?",`The pledge is private, but members post it and tag the school if they like. The AI assignment must be public until the winner is announced.`]];
 let S={w:{},n:{},u:{},id:"",th:"",ck:{},v:"browse"};const KEY="msschool.v1";
 try{Object.assign(S,JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){}
 L.forEach((l,i)=>{if(i>=7&&i<11&&V[i-7]&&S.u[l.id]===undefined)S.u[l.id]=V[i-7]});
@@ -157,7 +235,7 @@ const TODAY=iso(new Date()),fmt=s=>new Date(s+"T00:00:00").toLocaleDateString("e
 dsel=TODAY;const mob=()=>innerWidth<=860;
 const pct=m=>{const a=L.filter(l=>m<0||l.m==m);return a.length?Math.round(100*a.filter(l=>S.w[l.id]).length/a.length):0};
 const match=t=>!qs||t.toLowerCase().includes(qs);
-const dflt=id=>{if(id[0]!="e")return"";const e=E.find(x=>x.id==id);return e[1]=="h"?(e[3]==NBC?Z_NBC:e[3]==CM?Z_CM:""):""};
+const dflt=id=>{if(id[0]!="e"){const l=L.find(x=>x.id==id);return l&&l.u||""}const e=E.find(x=>x.id==id);return e[1]=="h"?(e[3]==NBC?Z_NBC:e[3]==CM?Z_CM:""):""};
 const ulink=id=>S.u[id]||dflt(id);
 const chip=(t,on,a)=>`<button class="ch ${on?"on":""}" ${a}>${t}</button>`;
 const tyc=()=>Object.keys(TY).map(k=>`<button class="ch tg ${flt[k]?"":"mt"}" data-f="${k}" style="margin:0;${flt[k]?"background:"+TY[k][1]+";border-color:"+TY[k][1]:""};color:${flt[k]?"#fff":""}">${TY[k][0]}</button>`).join("");
@@ -187,15 +265,18 @@ function browse(){let h="";const nl=L.filter(l=>!S.w[l.id]&&l.r<=TODAY&&!l.pl).s
  $("#cc").innerHTML=h||"<p class=mt>No matches.</p>"}
 function cal(){const y=cm.getFullYear(),mo=cm.getMonth(),off=(new Date(y,mo,1).getDay()+6)%7,n=new Date(y,mo+1,0).getDate();
  let h='<div class=cal><div class=g7>'+["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map(d=>`<div class=dw>${d}</div>`).join("");for(let i=0;i<off;i++)h+="<div></div>";
- for(let d=1;d<=n;d++){const s=iso(new Date(y,mo,d));h+=`<div class="dy ${s==TODAY?"td":""} ${s==dsel?"ds":""}" data-d="${s}"><span>${d}</span>`+E.filter(e=>e[0]==s&&flt[e[1]]&&match(e[2])).map(e=>`<a class="ev ${e[1]} ${sel==e.id?"sel":""}" data-s="${e.id}" title="${esc(e[2])}">${esc(e[2])}</a>`).join("")+"</div>"}
+ for(let d=1;d<=n;d++){const s=iso(new Date(y,mo,d));h+=`<div class="dy ${s==TODAY?"td":""} ${s==dsel?"ds":""}" data-d="${s}"><span>${d}</span>`+E.filter(e=>e[0]==s&&flt[e[1]]&&match(e[2])).map(e=>`<div role=button class="ev ${e[1]} ${sel==e.id?"sel":""}" data-s="${e.id}" title="${esc(e[2])}">${esc(e[2])}</div>`).join("")+"</div>"}
  const ev=E.filter(e=>e[0]==dsel&&flt[e[1]]);h+=`</div><h3>${fmt(dsel)}</h3>`+(ev.length?ev.map(e=>`<div class="ag ${sel==e.id?"sel":""}" data-s="${e.id}"><div class=d>${TY[e[1]][0]}</div><div><b>${esc(e[2])}</b></div></div>`).join(""):'<div class=mt>No events this day.</div>')+"</div>";$("#cc").innerHTML=h}
 function ag(){const now=new Date(),mon=new Date(now.getFullYear(),now.getMonth(),now.getDate()-((now.getDay()+6)%7)),w0=iso(mon),w1=iso(new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+6));
  const a=E.filter(e=>flt[e[1]]&&match(e[2])&&(agm=="all"||(agm=="up"&&e[0]>=TODAY)||(agm=="past"&&e[0]<TODAY)||(agm=="wk"&&e[0]>=w0&&e[0]<=w1)));
  $("#cc").innerHTML=a.map(e=>`<div class="ag ${e[0]<TODAY?"pa":""} ${e[0]==TODAY?"td":""} ${sel==e.id?"sel":""}" data-s="${e.id}"><div class=d>${fmt(e[0])}</div><div><b>${esc(e[2])}</b><span class=tg style="background:${TY[e[1]][1]}">${TY[e[1]][0]}</span>${e[3]?`<div class=d>${esc(e[3])}</div>`:""}</div></div>`).join("")||"<p class=mt>Nothing here.</p>"}
+const ROUTE=()=>`<div class=rt><a href="${TD}" target=_blank><b>🛠 Can't log in?</b><small>Tech Issues group</small></a><a href="${lk("Telegram: Assign")}" target=_blank><b>📝 Assignment</b><small>Assignments group</small></a><a href="${joinH().u}" target=_blank><b>🎓 Lesson question</b><small>Handholding Zoom</small></a><a href="${lk("Telegram: Main")}" target=_blank><b>📣 Announcements</b><small>Main group</small></a></div>`;
+const GS=["Read the pinned posts in the Main group","Download the schedule PDF (roadmap)","Fill the baseline assessment form","Find your enrollment email (portal link and student ID)","Log in to the portal and open My Courses","Join all four Telegram groups","Take the personality and temperament tests","Click “Mark as complete” on every lesson you finish"];
+const GSBOX=()=>`<div class=box><b>Start here · ${GS.filter((x,i)=>S.ck["s"+i]).length}/${GS.length}</b><p class=mt style="margin:2px 0 6px">New to the school? Work down the list.</p>${GS.map((x,i)=>`<label class="ck ${S.ck["s"+i]?"dn":""}"><input type=checkbox data-ck="s${i}" ${S.ck["s"+i]?"checked":""}><span>${x}</span></label>`).join("")}</div>`;
 function faq(){const a=F.filter(f=>(fc<0||f[0]==fc)&&match(f[1]+" "+f[2].replace(/<[^>]+>/g," ")));
- $("#cc").innerHTML=a.map(f=>`<details class=fq ${qs?"open":""}><summary>${esc(f[1])}</summary><div>${f[2]}</div></details>`).join("")||"<p class=mt>No answer found. Ask in handholding, or post tech problems in the Tech group.</p>"}
+ $("#cc").innerHTML=(qs||fc>=0?"":ROUTE())+a.map(f=>`<details class=fq ${qs?"open":""}><summary>${esc(f[1])}</summary><div>${f[2]}</div></details>`).join("")||"<p class=mt>No answer found. Ask in handholding, or post tech problems in the Tech group.</p>"}
 function info(){const R=(t,a)=>`<div class=box><b>${t}</b><ul>${a.map(x=>`<li>${x}</li>`).join("")}</ul></div>`,dn=AS.filter((x,i)=>S.ck[i]).length;
- $("#cc").innerHTML=`<div class=box><b>AI assignment checklist · ${dn}/${AS.length}</b><p class=mt style="margin:2px 0 6px">Due 9 Oct, 11:59pm WAT. Prize ₦200,000 or $100. Submit via the <a href="${lk("AI assignment")}" target=_blank>Google Form ↗</a></p>${AS.map((x,i)=>`<label class="ck ${S.ck[i]?"dn":""}"><input type=checkbox data-ck="${i}" ${S.ck[i]?"checked":""}><span>${esc(x)}</span></label>`).join("")}</div>
+ $("#cc").innerHTML=GSBOX()+`<div class=box><b>AI assignment checklist · ${dn}/${AS.length}</b><p class=mt style="margin:2px 0 6px">Due 9 Oct, 11:59pm WAT. Prize ₦200,000 or $100. Submit via the <a href="${lk("AI assignment")}" target=_blank>Google Form ↗</a></p>${AS.map((x,i)=>`<label class="ck ${S.ck[i]?"dn":""}"><input type=checkbox data-ck="${i}" ${S.ck[i]?"checked":""}><span>${esc(x)}</span></label>`).join("")}</div>
  <div class=box><b>My student ID</b><p class=mt style="margin:2px 0 6px">No spaces, ever. A wrong ID can cost you scores and attendance.</p><input id=sid placeholder="MS…" value="${esc(S.id)}"></div>
  <div class=box><b>Key links</b>${LK.map(l=>`<div class=lnk><span>${esc(l[0])}</span><a href="${l[1]}" target=_blank rel=noopener>Open ↗</a></div>`).join("")}<div class=lnk><span>Telegram: Tech Issues (shared in chat)</span><a href="${TD}" target=_blank>Open ↗</a></div><div class=lnk><span>Higgsfield referral (Nelly)</span><a href="${HF}" target=_blank>Open ↗</a></div></div>`+
  R("How the school works",["5 Oct to 7 Dec 2026. Learn on Day 1, implement on Day 2.","Money-generating activities first, then structure.","Pre-recorded classes on the LMS, all under 20 min.","Some assignments are posted on social media, with proof shared in Telegram.","Adapt every example (product- and service-based) to your own business."])+
@@ -212,12 +293,12 @@ function right(){if(!sel){$("#rp").innerHTML="<div class=sh><span></span><button
 function draw(){hdr();sb();left();({browse,cal,ag,faq,info})[view]();right()}
 function md(){let o="# Marketing & Structure School: Knowledge Repository\n\n";MODS.forEach((m,i)=>{o+=`## ${m[0]}\n\n`;L.filter(l=>l.m==i).forEach(l=>{o+=`### ${l.t}${S.w[l.id]?" ✓":""}\n`+(S.u[l.id]?`- Link: ${S.u[l.id]}\n`:"")+(S.n[l.id]?`- Takeaways: ${S.n[l.id]}\n`:"")+"\n"})});
  o+="## Calendar notes\n\n";E.forEach(e=>{if(S.n[e.id])o+=`- ${e[0]} ${e[2]}: ${S.n[e.id]}\n`});o+="\n## FAQ\n\n";F.forEach(f=>o+=`**${f[1]}**\n${f[2].replace(/<[^>]+>/g,"")}\n\n`);return o}
-const pick=id=>{sel=id;draw();if(mob())$("#app").dataset.s="r"};
+const pick=id=>{sel=id;draw();if(mob())$("#app").dataset.pane="r"};
 document.addEventListener("click",e=>{const t=e.target;let b;
  if(!t.closest("#qm"))$("#qm").open=false;else if(t.closest("#qp a"))setTimeout(()=>$("#qm").open=false,50);
- if(b=t.closest("[data-v]")){view=b.dataset.v;S.v=view;sv();$("#app").dataset.s="";draw();$("#cc").scrollTop=0;if(view=="ag"){const f=$("#cc .ag:not(.pa)");f&&f.scrollIntoView({block:"start"})}}
- else if(b=t.closest("[data-x]"))$("#app").dataset.s="";
- else if(b=t.closest("[data-s]"))pick(b.dataset.s);
+ if(b=t.closest("[data-v]")){view=b.dataset.v;S.v=view;sv();$("#app").dataset.pane="";draw();$("#cc").scrollTop=0;if(view=="ag"){const f=$("#cc .ag:not(.pa)");f&&f.scrollIntoView({block:"start"})}}
+ else if(b=t.closest("[data-x]"))$("#app").dataset.pane="";
+ else if(b=t.closest("[data-s]:not(#app)"))pick(b.dataset.s);
  else if(b=t.closest("[data-d]")){dsel=b.dataset.d;draw()}
  else if(b=t.closest("[data-m]")){mod=+b.dataset.m;view="browse";draw()}
  else if(b=t.closest("[data-f]")){flt[b.dataset.f]^=1;draw()}
